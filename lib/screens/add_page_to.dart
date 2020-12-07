@@ -3,24 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:provider/provider.dart';
 
-class AddItem extends StatefulWidget {
+class AddItemTo extends StatefulWidget {
   @override
-  _AddItemState createState() => _AddItemState();
+  _AddItemToState createState() => _AddItemToState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemToState extends State<AddItemTo> {
   TextEditingController _title = TextEditingController();
   TextEditingController _phoneNo = TextEditingController();
   TextEditingController _people = TextEditingController();
-  CollectionReference post = FirebaseFirestore.instance.collection('fromHGU');
-
+  CollectionReference post = FirebaseFirestore.instance.collection('toHGU');
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<TheUser>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('From Handong'),
+        title: Text('To Handong'),
         actions: <Widget>[
           FlatButton(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -54,7 +53,7 @@ class _AddItemState extends State<AddItem> {
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
-                  labelText: '도착지',
+                  labelText: '출발지',
                 ),
               ),
             ),

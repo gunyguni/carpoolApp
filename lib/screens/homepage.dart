@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/screens/from_handong.dart';
+import 'package:handongcarpool/screens/to_handong.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -71,7 +72,12 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
                   child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ToHandong()));
+                    },
                     color: Colors.white,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
