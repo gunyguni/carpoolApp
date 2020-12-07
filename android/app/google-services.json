@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "935473334557",
+    "firebase_url": "https://handongcarpool.firebaseio.com",
+    "project_id": "handongcarpool",
+    "storage_bucket": "handongcarpool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:935473334557:android:9e0c7f91f99dc6b742f9f4",
+        "android_client_info": {
+          "package_name": "com.gunyguni.handongcarpool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "935473334557-innavn7jp0el57avptmun938cr2ru33n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gunyguni.handongcarpool",
+            "certificate_hash": "04f6fd65abefec1c6ea571e4fc83ad6086d789c0"
+          }
+        },
+        {
+          "client_id": "935473334557-q0r3pujaf2pijm8p29u7lnsajvqj2j4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk6UyGLpwgQ913RXGskLClGTplkYc3tPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "935473334557-q0r3pujaf2pijm8p29u7lnsajvqj2j4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
