@@ -19,11 +19,7 @@ class _AddItemState extends State<AddItem> {
     final user = Provider.of<TheUser>(context);
     return Scaffold(
       appBar: AppBar(
-        leading: FlatButton(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Text('Cancel'),
-          onPressed: () => Navigator.pop(context),
-        ),
+        backgroundColor: Colors.grey,
         title: Text('Add'),
         actions: <Widget>[
           FlatButton(
@@ -58,7 +54,7 @@ class _AddItemState extends State<AddItem> {
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
-                  labelText: '제목',
+                  labelText: '도착지',
                 ),
               ),
             ),
@@ -76,7 +72,7 @@ class _AddItemState extends State<AddItem> {
               child: TextField(
                 controller: _people,
                 decoration: InputDecoration(
-                  labelText: '인원 수',
+                  labelText: '총 인원',
                 ),
               ),
             ),

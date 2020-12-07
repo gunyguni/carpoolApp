@@ -24,10 +24,10 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 80.0),
                 Column(
                   children: <Widget>[
-                    Image.asset('assets/car1.png'),
+                    Image.asset('assets/car.png'),
                     SizedBox(height: 16.0),
                     Text(
-                      '한동 카풀',
+                      'HanCar',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 80.0),
                 RaisedButton(
-                  color: Colors.white,
+                  color: Colors.grey,
                   child: Row(
                     children: <Widget>[
                       Image.asset(
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 12.0),
                 RaisedButton(
-                  color: Colors.white,
+                  color: Colors.grey,
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.account_circle),

@@ -14,6 +14,7 @@ class FromHandong extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.grey,
         title: Text('카풀 게시판'),
         actions: <Widget>[
           FlatButton.icon(

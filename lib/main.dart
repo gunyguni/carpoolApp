@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   ThemeData defaultTheme() {
     return ThemeData(
       // the default brightness and colors are DEFINED HERE
-      brightness: Brightness.light,
+      brightness: Brightness.dark,
       primaryColor: Colors.lightBlue[800],
       accentColor: Colors.cyan[600],
 
