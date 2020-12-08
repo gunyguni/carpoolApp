@@ -86,7 +86,9 @@ class FromHandong extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DetailedFromPage()),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      DetailedFromPage()), //parameter로 post 넘기기
             );
           },
           title: Text(post.title),

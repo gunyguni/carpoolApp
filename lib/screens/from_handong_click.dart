@@ -92,7 +92,8 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
             indent: 20,
             endIndent: 20,
             thickness: 1,
-          )
+          ),
+          //stream을 listview로 받아오기
         ],
       ),
     );

@@ -20,7 +20,6 @@ class _PersonInformationState extends State<PersonInformation> {
   File _image;
   final picker = ImagePicker();
   @override
-
   Future getImageFromGallery(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
     setState(() {
@@ -32,14 +31,18 @@ class _PersonInformationState extends State<PersonInformation> {
   }
 
   CollectionReference userinfo = FirebaseFirestore.instance.collection('user');
-  Future<void> addInformation() async {
-    firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('user');
-    final user = Provider.of<TheUser>(context);
-    await ref.putFile(_image);
-    String url = (await ref.getDownloadURL()).toString();
-    await userinfo.doc().set({'uid': user.uid, 'phonenum': _phoneController.text, 'email': user.email, 'url': url}).then((value) => print('Item added')).catchError((error) => print('Failed add Item : $error'));
-  }
+  // Future<void> addInformation() async {
+  //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('user');
+  //   final user = Provider.of<TheUser>(context);
+  //   await ref.putFile(_image);
+  //   String url = (await ref.getDownloadURL()).toString();
+  //   await userinfo.doc().set({'uid': user.uid, 'phonenum': _phoneController.text, 'email': user.email, 'url': url}).then((value) => print('Item added')).catchError((error) => print('Failed add Item : $error'));
+  // }
   Widget build(BuildContext context) {
+    firebase_storage.Reference ref =
+        firebase_storage.FirebaseStorage.instance.ref().child('user');
+    final user = Provider.of<TheUser>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
@@ -47,9 +50,24 @@ class _PersonInformationState extends State<PersonInformation> {
         centerTitle: true,
         actions: [
           FlatButton(
-            child: Text('Save', style: TextStyle(color: Colors.white),),
+            child: Text(
+              'Save',
+              style: TextStyle(color: Colors.white),
+            ),
             onPressed: () async {
-              await addInformation();
+              await ref.putFile(_image);
+              String url = (await ref.getDownloadURL()).toString();
+              await userinfo
+                  .doc()
+                  .set({
+                    'uid': user.uid,
+                    'phonenum': _phoneController.text,
+                    'email': FirebaseAuth.instance.currentUser.email,
+                    'url': url
+                  })
+                  .then((value) => print('Item added'))
+                  .catchError((error) => print('Failed add Item : $error'));
+
               uploaded = false;
             },
           ),
@@ -63,15 +81,19 @@ class _PersonInformationState extends State<PersonInformation> {
                 width: 250,
                 height: 250,
                 child: Center(
-                  child: _image == null ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.network('https://www.handong.edu/site/handong/res/img/splash-1199.png'),
-                  )
-                      : Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.file(_image, fit: BoxFit.fill,),
-                  )
-                ),
+                    child: _image == null
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.network(
+                                'https://www.handong.edu/site/handong/res/img/splash-1199.png'),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.file(
+                              _image,
+                              fit: BoxFit.fill,
+                            ),
+                          )),
               ),
             ),
             Row(
