@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
-import 'package:handongcarpool/screens/add_page.dart';
+import 'package:handongcarpool/screens/add_page_from.dart';
+import 'package:handongcarpool/screens/from_handong_click.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:handongcarpool/widgets/post_tile.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ class FromHandong extends StatelessWidget {
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Lo'),
+            label: Text('Log'),
             onPressed: () async {
               await _auth.signOut();
               Navigator.pop(context);
@@ -53,9 +54,7 @@ class FromHandong extends StatelessWidget {
             return ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return PostTile(
-                  post: posts[index],
-                );
+                return _postTile(context, posts[index]);
               },
             );
           }),
@@ -77,6 +76,30 @@ class FromHandong extends StatelessWidget {
         );
       }).toList();
     }
+  }
+
+  Widget _postTile(BuildContext context, Post post) {
+    return Padding(
+      padding: EdgeInsets.only(top: 2),
+      child: Card(
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetailedFromPage()),
+            );
+          },
+          title: Text(post.title),
+          subtitle: Text(post.phoneNo),
+          trailing: Column(
+            children: <Widget>[
+              Icon(Icons.person),
+              Text('0/' + post.people.toString())
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

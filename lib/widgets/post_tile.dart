@@ -12,7 +12,11 @@ class PostTile extends StatelessWidget {
       padding: EdgeInsets.only(top: 2),
       child: Card(
         child: ListTile(
-          onTap: () {},
+          onTap: () {
+            //         Navigator.push(
+            // context,
+            // MaterialPageRoute(builder: (context) => 네비게이션할 페이지()),);
+          },
           title: Text(post.title),
           subtitle: Text(post.phoneNo),
           trailing: Column(

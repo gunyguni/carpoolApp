@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
-import 'package:handongcarpool/screens/add_page.dart';
+import 'package:handongcarpool/screens/add_page_from.dart';
 import 'package:handongcarpool/screens/add_page_to.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:handongcarpool/widgets/post_tile.dart';
