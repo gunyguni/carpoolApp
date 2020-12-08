@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                           height: 400,
                         ),
                         Text(
-                          '출발지에서 함께 한동대학교로 가는 카풀입니다.',
+                          '한동대학교에서 목적지로 가는 카풀입니다.',
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                           height: 30,
                         ),
                         Text(
-                          '한동대학교에서 목적지로 가는 카풀입니다.',
+                          '출발지에서 함께 한동대학교로 가는 카풀입니다.',
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
