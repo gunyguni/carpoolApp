@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:handongcarpool/model/post.dart';
 
 class DetailedFromPage extends StatefulWidget {
+  final Post post;
+
+  DetailedFromPage({Key key, this.post}) : super(key: key);
   @override
   _DetailedFromPageState createState() => _DetailedFromPageState();
 }
@@ -20,7 +24,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
             padding: EdgeInsets.fromLTRB(40, 50, 40, 10),
             child: Center(
               child: Text(
-                'title',
+                widget.post.title,
                 style: TextStyle(fontSize: 25),
               ),
             ),
@@ -34,15 +38,15 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "연락처: ",
+                  "연락처: " + widget.post.phoneNo,
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  "도착지: ",
+                  "도착지: " + widget.post.destination,
                   style: TextStyle(fontSize: 18),
                 ),
                 Text(
-                  "시간: ",
+                  "시간: " + widget.post.time,
                   style: TextStyle(fontSize: 18),
                 ),
                 SizedBox(
@@ -54,7 +58,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                       Icons.person,
                     ),
                     Text(
-                      " 현재 카풀 신청 인원: 0/4",
+                      " 현재 카풀 신청 인원: 0/${widget.post.people}",
                       style: TextStyle(fontSize: 18),
                     ),
                   ],

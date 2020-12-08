@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:handongcarpool/screens/homepage.dart';
@@ -13,8 +15,15 @@ class Wrapper extends StatelessWidget {
 
     if (user == null) {
       return LoginPage();
+      // }
+      // else if (FirebaseFirestore.instance
+      //         .collection('user')
+      //         .where('uid', isEqualTo: user.uid)
+      //         .snapshots() ==
+      //     null) {
+      //   return PersonInformation();
     } else {
-      return PersonInformation();
+      return HomePage();
     }
   }
 }

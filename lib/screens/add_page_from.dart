@@ -12,6 +12,8 @@ class _AddItemState extends State<AddItem> {
   TextEditingController _title = TextEditingController();
   TextEditingController _phoneNo = TextEditingController();
   TextEditingController _people = TextEditingController();
+  TextEditingController _destination = TextEditingController();
+  TextEditingController _time = TextEditingController();
   CollectionReference post = FirebaseFirestore.instance.collection('fromHGU');
 
   @override
@@ -20,7 +22,7 @@ class _AddItemState extends State<AddItem> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('From Handong'),
+        title: Text('카풀 인원 모집하기'),
         actions: <Widget>[
           FlatButton(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -36,8 +38,8 @@ class _AddItemState extends State<AddItem> {
                   'title': _title.text,
                   'phoneNo': _phoneNo.text,
                   'people': int.parse(_people.text),
-                  'destination': '',
-                  'time': 0
+                  'destination': _destination.text,
+                  'time': _time.text,
                 });
               } catch (e) {
                 print(e.toString());
@@ -54,7 +56,7 @@ class _AddItemState extends State<AddItem> {
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
-                  labelText: '도착지',
+                  labelText: '제목',
                 ),
               ),
             ),
@@ -73,6 +75,24 @@ class _AddItemState extends State<AddItem> {
                 controller: _people,
                 decoration: InputDecoration(
                   labelText: '총 인원',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: TextField(
+                controller: _destination,
+                decoration: InputDecoration(
+                  labelText: '도착지',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: TextField(
+                controller: _time,
+                decoration: InputDecoration(
+                  labelText: '시간',
                 ),
               ),
             ),

@@ -72,7 +72,7 @@ class FromHandong extends StatelessWidget {
           phoneNo: doc.get('phoneNo') ?? '',
           people: doc.get('people') ?? 0,
           destination: doc.get('destination') ?? '',
-          time: doc.get('time') ?? 0,
+          time: doc.get('time') ?? '',
         );
       }).toList();
     }
@@ -87,8 +87,9 @@ class FromHandong extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      DetailedFromPage()), //parameter로 post 넘기기
+                  builder: (context) => DetailedFromPage(
+                        post: post,
+                      )), //parameter로 post 넘기기
             );
           },
           title: Text(post.title),

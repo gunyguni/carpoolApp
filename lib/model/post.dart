@@ -3,7 +3,7 @@ class Post {
   final String title;
   final String phoneNo;
   final String destination;
-  final int time;
+  final String time;
   final int people;
 
   Post(
