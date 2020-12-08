@@ -28,6 +28,9 @@ dependencies:
   firebase_auth: "^0.18.3"
   cloud_firestore: "^0.14.3"
   provider: ^4.3.2+2
+  firebase_storage: "^5.0.1"
+  image_picker: ^0.6.7+12
+  path_provider: ^1.6.24
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -53,6 +56,7 @@ flutter:
   assets:
     - assets/car.png
     - assets/background.png
+    - assets/google.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
