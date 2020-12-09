@@ -73,6 +73,8 @@ class FromHandong extends StatelessWidget {
           people: doc.get('people') ?? 0,
           destination: doc.get('destination') ?? '',
           time: doc.get('time') ?? '',
+          replies: doc.get('replies'),
+          reference: doc.reference,
         );
       }).toList();
     }
@@ -97,7 +99,7 @@ class FromHandong extends StatelessWidget {
           trailing: Column(
             children: <Widget>[
               Icon(Icons.person),
-              Text('0/' + post.people.toString())
+              Text(post.replies.toString() + '/' + post.people.toString())
             ],
           ),
         ),

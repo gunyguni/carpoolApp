@@ -40,6 +40,8 @@ class _AddItemState extends State<AddItem> {
                   'people': int.parse(_people.text),
                   'destination': _destination.text,
                   'time': _time.text,
+                  'likedUid': <String>[],
+                  'replies': 0,
                 });
               } catch (e) {
                 print(e.toString());
