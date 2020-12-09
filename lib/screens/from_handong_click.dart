@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
+import 'package:handongcarpool/widgets/reply_tile.dart';
 import 'package:provider/provider.dart';
 
 class DetailedFromPage extends StatefulWidget {
@@ -17,24 +18,22 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
   Widget build(BuildContext context) {
     final _user = Provider.of<TheUser>(context);
     //나중엔 Firebase로 연동할 예정
-    List<TheUser> list = [
-      TheUser(uid: "21600244", phoneNo: "01012341234"),
-      TheUser(uid: "21300123", phoneNo: "01012344432"),
-      TheUser(uid: "21500342", phoneNo: "01034123434"),
-      TheUser(uid: "21400432", phoneNo: "01023459195"),
-      TheUser(uid: "21400432", phoneNo: "01023459195"),
-    ];
+    // List<TheUser> list = [
+    //   TheUser(uid: "21600244", phoneNo: "01012341234"),
+    //   TheUser(uid: "21300123", phoneNo: "01012344432"),
+    //   TheUser(uid: "21500342", phoneNo: "01034123434"),
+    //   TheUser(uid: "21400432", phoneNo: "01023459195"),
+    //   TheUser(uid: "21400432", phoneNo: "01023459195"),
+    // ];
 
     //////////////////// 여기서 어떻게 해야 subcollection에 있는
     ///snapshot들을 모아 TheUser의 list로 만들 수 있을까 고민해야 됌
-    // widget.post.reference.collection('subscribe').doc()
-    // });
 
-    //만약 subcollection을 적용한 뒤에 이 화면이 바뀌지 않으면 document snapshot의 stream을 subcollection으로
-    // 바꿔야 할수도 있음
     return StreamBuilder<DocumentSnapshot>(
         stream: widget.post.reference.snapshots(),
         builder: (context, snapshot) {
+          //해당 카풀을 신청한 사람의 uid 저장
+          List likedUid = snapshot.data.get('likedUid');
           if (snapshot.connectionState == ConnectionState.waiting ||
               !snapshot.hasData ||
               snapshot.data.data() == null) {
@@ -96,32 +95,49 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                     ),
                   ),
                   InkWell(
-                    //카풀 받기 버튼 누르면 subcollection에 추가
                     onTap: () {
-                      List likedUid = snapshot.data.get('likedUid');
-                      if (snapshot.data.get('replies') >=
-                          snapshot.data.get('people')) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("이미 신청 인원이 마감되었습니다 ㅜㅜ"),
-                        ));
-                      } else if (!likedUid.contains(_user.uid)) {
-                        //한번 신청한 사람의 uid를 저장하기 (중복 클릭 방지용)
-                        widget.post.reference
-                            .update({'replies': FieldValue.increment(1)});
-                        likedUid.add(_user.uid);
-                        widget.post.reference.update({'likedUid': likedUid});
-                        //해당 글의 subcollection의 클릭한 사람 이름 저장하기
+                      // 카풀 취소 버튼 누르면 subcollection에서 제거
+                      if (likedUid.contains(_user.uid)) {
                         widget.post.reference
                             .collection('subscribe')
-                            .add({'uid': '21600244', 'phoneNo': '01012345678'});
-
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("신청 완료"),
-                        ));
+                            .doc(snapshot.data.get('uid'))
+                            .delete();
+                        // 그 후 현재 카풀 신청 인원을 1 줄임
+                        widget.post.reference
+                            .update({'replies': FieldValue.increment(-1)});
+                        // 마지막으로 현재 카풀을 신청한 uid list에서 현재 user의 uid를 제거함
+                        likedUid.remove(_user.uid);
+                        widget.post.reference.update({'likedUid': likedUid});
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text("이미 해당 카풀을 신청 했습니다 ㅜㅜ"),
-                        ));
+                        //카풀 받기 버튼 누르면 subcollection에 추가
+                        if (snapshot.data.get('replies') >=
+                            snapshot.data.get('people')) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("이미 신청 인원이 마감되었습니다 ㅜㅜ"),
+                          ));
+                        } else if (!likedUid.contains(_user.uid)) {
+                          //한번 신청한 사람의 uid를 저장하기 (중복 클릭 방지용)
+                          widget.post.reference
+                              .update({'replies': FieldValue.increment(1)});
+                          likedUid.add(_user.uid);
+                          widget.post.reference.update({'likedUid': likedUid});
+                          //해당 글의 subcollection의 클릭한 사람 이름 저장하기
+                          widget.post.reference
+                              .collection('subscribe')
+                              .doc(snapshot.data.get('uid'))
+                              .set({
+                            'uid': '21600244',
+                            'phoneNo': '01012345678'
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("신청 완료"),
+                          ));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text("이미 해당 카풀을 신청 했습니다 ㅜㅜ"),
+                          ));
+                        }
                       }
                     },
                     child: Container(
@@ -135,13 +151,22 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Icon(Icons.person_add),
+                            likedUid.contains(_user.uid)
+                                ? Icon(Icons.person_add_disabled)
+                                : Icon(Icons.person_add),
                             SizedBox(
                               width: 20,
                             ),
-                            Text('카풀 받기',
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold))
+                            // 만약 카풀 신청했다면 버튼이 바뀜
+                            likedUid.contains(_user.uid)
+                                ? Text('카풀 취소',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold))
+                                : Text('카풀 받기',
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold))
                           ],
                         ),
                       ),
@@ -156,26 +181,12 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                   ),
                   ///////////////////////////////////// 여기 해야 됌
                   // subcollection을 listview로 받아오기
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _replyCard(list[index]);
-                    },
-                  ),
+
+                  ReplyTile(post: widget.post),
                 ],
               ),
             ),
           );
         });
-  }
-
-  Widget _replyCard(TheUser user) {
-    return ListTile(
-      leading: Icon(Icons.person),
-      title: Text(user.uid),
-      subtitle: Text(user.phoneNo),
-    );
   }
 }
