@@ -69,7 +69,7 @@ class _PersonInformationState extends State<PersonInformation> {
                   .catchError((error) => print('Failed add Item : $error'));
 
               uploaded = false;
-              print(FirebaseFirestore.instance.collection('user').doc(user.uid).snapshots());
+              // print(FirebaseFirestore.instance.collection('user').doc(user.uid).snapshots());
             },
           ),
         ],
