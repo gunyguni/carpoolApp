@@ -5,21 +5,24 @@ import 'package:provider/provider.dart';
 
 class AddItemTo extends StatefulWidget {
   @override
-  _AddItemToState createState() => _AddItemToState();
+  _AddItemState createState() => _AddItemState();
 }
 
-class _AddItemToState extends State<AddItemTo> {
+class _AddItemState extends State<AddItemTo> {
   TextEditingController _title = TextEditingController();
   TextEditingController _phoneNo = TextEditingController();
   TextEditingController _people = TextEditingController();
-  CollectionReference post = FirebaseFirestore.instance.collection('toHGU');
+  TextEditingController _destination = TextEditingController();
+  TextEditingController _time = TextEditingController();
+  CollectionReference post = FirebaseFirestore.instance.collection('fromHGU');
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<TheUser>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('To Handong'),
+        title: Text('카풀 인원 모집하기'),
         actions: <Widget>[
           FlatButton(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -35,8 +38,10 @@ class _AddItemToState extends State<AddItemTo> {
                   'title': _title.text,
                   'phoneNo': _phoneNo.text,
                   'people': int.parse(_people.text),
-                  'destination': '',
-                  'time': 0
+                  'destination': _destination.text,
+                  'time': _time.text,
+                  'likedUid': <String>[],
+                  'replies': 0,
                 });
               } catch (e) {
                 print(e.toString());
@@ -53,16 +58,7 @@ class _AddItemToState extends State<AddItemTo> {
               child: TextField(
                 controller: _title,
                 decoration: InputDecoration(
-                  labelText: '출발지',
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: _phoneNo,
-                decoration: InputDecoration(
-                  labelText: '핸드폰 번호',
+                  labelText: '제목',
                 ),
               ),
             ),
@@ -72,6 +68,24 @@ class _AddItemToState extends State<AddItemTo> {
                 controller: _people,
                 decoration: InputDecoration(
                   labelText: '총 인원',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: TextField(
+                controller: _destination,
+                decoration: InputDecoration(
+                  labelText: '출발지',
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: TextField(
+                controller: _time,
+                decoration: InputDecoration(
+                  labelText: '시간',
                 ),
               ),
             ),

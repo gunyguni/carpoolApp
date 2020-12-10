@@ -62,6 +62,33 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                     height: 10,
                   ),
                   Container(
+                    width: 200,
+                    height: 150,
+                    child: Image.network(
+                      widget.post.url,
+                      width: 150,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.grey[600],
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
                     padding: EdgeInsets.fromLTRB(80, 10, 40, 50),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -70,6 +70,7 @@ class FromHandong extends StatelessWidget {
           uid: doc.get('uid') ?? '',
           title: doc.get('title') ?? '',
           phoneNo: doc.get('phoneNo') ?? '',
+          url: doc.get('url') ?? null,
           people: doc.get('people') ?? 0,
           destination: doc.get('destination') ?? '',
           time: doc.get('time') ?? '',
