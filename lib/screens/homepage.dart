@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
@@ -50,6 +49,10 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.grey),
+                          ),
                           onPressed: () {
                             Navigator.push(
                                 context,
@@ -85,6 +88,10 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.grey),
+                          ),
                           onPressed: () {
                             Navigator.push(
                                 context,

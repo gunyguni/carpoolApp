@@ -35,13 +35,17 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 80.0),
                 RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.grey),
+                  ),
                   color: Colors.grey,
                   child: Row(
                     children: <Widget>[
-                      Image.asset(
-                        'assets/google.jpg',
-                        height: 30,
-                      ),
+                        Image.asset(
+                          'assets/googlet.jpg',
+                          height: 30,
+                        ),
                       Container(
                           padding: EdgeInsets.only(left: 85),
                           child: Text(
@@ -62,6 +66,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 12.0),
                 RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: Colors.grey),
+                  ),
                   color: Colors.grey,
                   child: Row(
                     children: <Widget>[

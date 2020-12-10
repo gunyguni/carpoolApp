@@ -134,6 +134,8 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                             content: Text("신청 완료"),
                           ));
                         } else {
+                          //카풀을 이미 신청한 경우. 이는 우리가 디자인적으로 극복해서 굳이 처리할 필요가
+                          // 없는 exception case이기 때문에 지워도 되지만 혹시 모르니 일단 놔둠
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("이미 해당 카풀을 신청 했습니다 ㅜㅜ"),
                           ));
@@ -146,7 +148,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                       child: Card(
                         elevation: 7,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -179,9 +181,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                     endIndent: 20,
                     thickness: 1,
                   ),
-                  ///////////////////////////////////// 여기 해야 됌
                   // subcollection을 listview로 받아오기
-
                   ReplyTile(post: widget.post),
                 ],
               ),

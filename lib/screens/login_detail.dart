@@ -21,8 +21,17 @@ class _PersonInformationState extends State<PersonInformation> {
   File _image;
   final picker = ImagePicker();
   @override
-  Future getImageFromGallery(ImageSource source) async {
-    final pickedFile = await picker.getImage(source: source);
+  Future getImageFromCamera() async{
+    final pickedFileCam = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if(pickedFileCam != null){
+        _image = File(pickedFileCam.path);
+        uploaded = true;
+      }
+    });
+  }
+  Future getImageFromGallery() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
@@ -30,7 +39,37 @@ class _PersonInformationState extends State<PersonInformation> {
       }
     });
   }
-
+  void _showPicker(context){
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc){
+        return SafeArea(
+          child: Container(
+            child: Wrap(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.photo_camera),
+                  title: Text('카메라'),
+                  onTap: () {
+                    getImageFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.photo_library),
+                  title: Text('갤러리'),
+                  onTap: () {
+                    getImageFromGallery();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
   CollectionReference userinfo = FirebaseFirestore.instance.collection('user');
   // Future<void> addInformation() async {
   //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('user');
@@ -47,7 +86,7 @@ class _PersonInformationState extends State<PersonInformation> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('Put phone no, Profile'),
+        title: Text('회원 정보 입력'),
         centerTitle: true,
         actions: [
           FlatButton(
@@ -105,7 +144,7 @@ class _PersonInformationState extends State<PersonInformation> {
                 IconButton(
                   icon: Icon(Icons.camera_alt_outlined),
                   onPressed: () {
-                    getImageFromGallery(ImageSource.gallery);
+                    _showPicker(context);
                   },
                 )
               ],

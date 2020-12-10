@@ -4,6 +4,7 @@ import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:handongcarpool/screens/add_page_from.dart';
 import 'package:handongcarpool/screens/from_handong_click.dart';
+import 'package:handongcarpool/screens/profile.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:handongcarpool/widgets/post_tile.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,17 @@ class FromHandong extends StatelessWidget {
               },
             );
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfilePage()),
+          );
+        },
+        child: Icon(Icons.person),
+        backgroundColor: Colors.grey,
+        mini: true,
+      ),
     );
   }
 
