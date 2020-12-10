@@ -22,6 +22,9 @@ class Wrapper extends StatelessWidget {
               .doc(user.uid)
               .snapshots(),
           builder: (BuildContext context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
             if (!snapshot.hasData || snapshot.data.data() == null) {
               //print(snapshot.data.get('phonenum'));
               return PersonInformation();
