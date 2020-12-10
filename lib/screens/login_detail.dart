@@ -16,6 +16,7 @@ class PersonInformation extends StatefulWidget {
 
 class _PersonInformationState extends State<PersonInformation> {
   TextEditingController _phoneController = TextEditingController();
+  TextEditingController _stunumController = TextEditingController();
   bool uploaded = false;
   File _image;
   final picker = ImagePicker();
@@ -63,7 +64,8 @@ class _PersonInformationState extends State<PersonInformation> {
                     'uid': user.uid,
                     'phonenum': _phoneController.text,
                     'email': FirebaseAuth.instance.currentUser.email,
-                    'url': url
+                    'url': url,
+                    'stunum': _stunumController.text
                   })
                   .then((value) => print('Item added'))
                   .catchError((error) => print('Failed add Item : $error'));
@@ -112,6 +114,13 @@ class _PersonInformationState extends State<PersonInformation> {
               width: 270,
               child: Column(
                 children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: '학번',
+                      focusColor: Colors.white,
+                    ),
+                    controller: _stunumController,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: '휴대폰 번호',
