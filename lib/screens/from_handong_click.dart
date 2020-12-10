@@ -127,7 +127,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                               .doc(snapshot.data.get('uid'))
                               .set({
                             'uid': '21600244',
-                            'phoneNo': '01012345678'
+                            'phoneNo': _user.phoneNo,
                           });
 
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

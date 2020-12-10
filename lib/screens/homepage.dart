@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     return StreamBuilder<QuerySnapshot>(
         stream: userCollection,
         builder: (context, snapshot) {
-          print('snapshot has data');
           return Material(
             type: MaterialType.transparency,
             child: Container(
