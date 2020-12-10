@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:handongcarpool/screens/login.dart';
+import 'package:handongcarpool/screens/profile_edit.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,12 @@ class ProfilePage extends StatefulWidget {
 
 
 class _ProfilePageState extends State<ProfilePage> {
+
   User users = FirebaseAuth.instance.currentUser;
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+
     final user = Provider.of<TheUser>(context);
     return Scaffold(
       appBar: AppBar(
@@ -29,11 +32,10 @@ class _ProfilePageState extends State<ProfilePage> {
             icon: Icon(Icons.edit),
             color: Colors.white,
             onPressed: () async {
-              await _auth.signOut();
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) => LoginPage()));
+                      builder: (BuildContext context) => ProfileEdit()));
             },
           ),
           IconButton(
