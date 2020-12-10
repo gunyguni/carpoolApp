@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
+import 'package:handongcarpool/screens/ShowProfilePicture.dart';
 import 'package:handongcarpool/widgets/reply_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -32,19 +33,39 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
     return StreamBuilder<DocumentSnapshot>(
         stream: widget.post.reference.snapshots(),
         builder: (context, snapshot) {
-          //해당 카풀을 신청한 사람의 uid 저장
-
           if (snapshot.connectionState == ConnectionState.waiting ||
               !snapshot.hasData ||
               snapshot.data.data() == null) {
             return Center(child: CircularProgressIndicator());
           }
+          //해당 카풀을 신청한 사람의 uid 저장
           List likedUid = snapshot.data.get('likedUid') ?? [];
           return Scaffold(
             appBar: AppBar(
               title: Text('From Handong'),
               centerTitle: true,
               backgroundColor: Colors.black38,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.create),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    if (_user.uid == widget.post.uid) {
+                      widget.post.reference.delete();
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("타인의 게시물은 지울 수 없습니다."),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -61,31 +82,43 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: 200,
-                    height: 150,
-                    child: Image.network(
-                      widget.post.url,
-                      width: 150,
-                      height: 100,
-                      fit: BoxFit.contain,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          offset: Offset(4.0, 4.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePicture(
+                            pictureURL: widget.post.url,
+                          ),
                         ),
-                        BoxShadow(
-                          color: Colors.grey[600],
-                          offset: Offset(-4.0, -4.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0,
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      width: 200,
+                      height: 150,
+                      child: Image.network(
+                        widget.post.url,
+                        width: 150,
+                        height: 100,
+                        fit: BoxFit.contain,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(4.0, 4.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0,
+                          ),
+                          BoxShadow(
+                            color: Colors.grey[600],
+                            offset: Offset(-4.0, -4.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
