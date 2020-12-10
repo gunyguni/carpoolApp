@@ -2,9 +2,10 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
-import 'package:handongcarpool/screens/from_handong.dart';
+import 'package:handongcarpool/screens/from_handong/from_handong.dart';
 import 'package:handongcarpool/screens/login_detail.dart';
-import 'package:handongcarpool/screens/to_handong.dart';
+import 'package:handongcarpool/screens/profile.dart';
+import 'package:handongcarpool/screens/to_handong/to_handong.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 400,
+                        height: 300,
                       ),
                       Text(
                         '한동대학교에서 목적지로 가는 카풀입니다.',
@@ -107,6 +108,38 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text(
                                 'To Handong',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 200,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(120, 0, 120, 0),
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.grey),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ProfilePage()));
+                          },
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.person,
+                                color: Colors.black,
+                              ),
+                              Text(
+                                '내 프로필',
                                 style: TextStyle(color: Colors.black),
                               ),
                             ],

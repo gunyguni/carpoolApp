@@ -2,13 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
-import 'package:handongcarpool/screens/add_page_from.dart';
-import 'package:handongcarpool/screens/add_page_to.dart';
+import 'package:handongcarpool/screens/from_handong/add_page_from.dart';
+import 'package:handongcarpool/screens/from_handong/from_handong_click.dart';
+import 'package:handongcarpool/screens/profile.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:handongcarpool/widgets/post_tile.dart';
 import 'package:provider/provider.dart';
 
-class ToHandong extends StatelessWidget {
+class FromHandong extends StatelessWidget {
   AuthService _auth = AuthService();
 
   @override
@@ -20,7 +21,7 @@ class ToHandong extends StatelessWidget {
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(Icons.person),
-            label: Text('Lo'),
+            label: Text('Log'),
             onPressed: () async {
               await _auth.signOut();
               Navigator.pop(context);
@@ -31,14 +32,14 @@ class ToHandong extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddItemTo()),
+                MaterialPageRoute(builder: (context) => AddItem()),
               );
             },
           )
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('toHGU').snapshots(),
+          stream: FirebaseFirestore.instance.collection('fromHGU').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -54,12 +55,21 @@ class ToHandong extends StatelessWidget {
             return ListView.builder(
               itemCount: posts.length,
               itemBuilder: (context, index) {
-                return PostTile(
-                  post: posts[index],
-                );
+                return _postTile(context, posts[index]);
               },
             );
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfilePage()),
+          );
+        },
+        child: Icon(Icons.person),
+        backgroundColor: Colors.grey,
+        mini: true,
+      ),
     );
   }
 
@@ -72,12 +82,42 @@ class ToHandong extends StatelessWidget {
           uid: doc.get('uid') ?? '',
           title: doc.get('title') ?? '',
           phoneNo: doc.get('phoneNo') ?? '',
+          url: doc.get('url') ?? null,
           people: doc.get('people') ?? 0,
           destination: doc.get('destination') ?? '',
-          time: doc.get('time') ?? 0,
+          time: doc.get('time') ?? '',
+          replies: doc.get('replies'),
+          reference: doc.reference,
         );
       }).toList();
     }
+  }
+
+  Widget _postTile(BuildContext context, Post post) {
+    return Padding(
+      padding: EdgeInsets.only(top: 2),
+      child: Card(
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => DetailedFromPage(
+                        post: post,
+                      )), //parameter로 post 넘기기
+            );
+          },
+          title: Text(post.title),
+          subtitle: Text(post.phoneNo),
+          trailing: Column(
+            children: <Widget>[
+              Icon(Icons.person),
+              Text(post.replies.toString() + '/' + post.people.toString())
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
