@@ -1,6 +1,6 @@
 class TheUser {
   final String uid;
-  final String email;
+  String email;
   String phoneNo;
   String stunum;
   String url;

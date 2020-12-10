@@ -5,6 +5,7 @@ import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:handongcarpool/screens/from_handong.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ReplyTile extends StatefulWidget {
   final Post post;
@@ -49,7 +50,10 @@ class _ReplyTileState extends State<ReplyTile> {
       return snapshot.map((data) {
         return TheUser(
           uid: data.get('uid'),
+          stunum: data.get('stunum'),
           phoneNo: data.get('phoneNo'),
+          url: data.get('url'),
+          email: data.get('email'),
         );
       }).toList();
     }
@@ -57,9 +61,19 @@ class _ReplyTileState extends State<ReplyTile> {
 
   Widget _replyCard(TheUser user) {
     return ListTile(
-      leading: Icon(Icons.person),
-      title: Text(user.uid),
-      subtitle: Text(user.phoneNo),
+      //아이콘 circle avatar로 바꿈
+      leading: user.url == null
+          ? Icon(Icons.person)
+          : CircleAvatar(
+              radius: 30,
+              backgroundColor: Colors.orange,
+              child: CircleAvatar(
+                radius: 25,
+                backgroundImage: NetworkImage(user.url),
+              ),
+            ),
+      title: Text(user.stunum),
+      subtitle: Text('연락처: ' + user.phoneNo + '\n이메일: ' + user.email),
     );
   }
 }

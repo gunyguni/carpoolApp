@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
@@ -26,6 +27,7 @@ class Wrapper extends StatelessWidget {
               return Scaffold(body: Center(child: CircularProgressIndicator()));
             } else if (snapshot.hasData && snapshot.data.data() != null) {
               user.phoneNo = snapshot.data.get('phonenum');
+              user.email = FirebaseAuth.instance.currentUser.email ?? '';
               user.stunum = snapshot.data.get('stunum');
               user.url = snapshot.data.get('url');
               print(user.phoneNo);
