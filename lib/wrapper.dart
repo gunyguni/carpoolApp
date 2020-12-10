@@ -18,14 +18,14 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginPage();
     } else {
-      return StreamBuilder<DocumentSnapshot>(
+      return StreamBuilder<DocumentSnapshot> (
         stream: FirebaseFirestore.instance.collection('user')
             .doc(user.uid)
             .snapshots(),
         builder: (BuildContext context, snapshot) {
           if (!snapshot.hasData || snapshot.data.data() == null) {
             //print(snapshot.data.get('phonenum'));
-            return PersonInformation();
+             return PersonInformation();
           } else {
             user.phoneNo = snapshot.data.get('phonenum');
             print(user.phoneNo);
