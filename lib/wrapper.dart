@@ -23,7 +23,7 @@ class Wrapper extends StatelessWidget {
       //     null) {
       //   return PersonInformation();
     } else {
-      return HomePage();
+      return PersonInformation();
     }
   }
 }
