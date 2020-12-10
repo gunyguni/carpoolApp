@@ -1,7 +1,9 @@
 class TheUser {
   final String uid;
-  final String stunum;
-  final String email;
+  String email;
   String phoneNo;
-  TheUser({this.uid, this.email, this.phoneNo, this.stunum});
+  String stunum;
+  String url;
+
+  TheUser({this.uid, this.email, this.phoneNo, this.stunum, this.url});
 }

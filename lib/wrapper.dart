@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
@@ -23,30 +24,19 @@ class Wrapper extends StatelessWidget {
               .snapshots(),
           builder: (BuildContext context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (!snapshot.hasData || snapshot.data.data() == null) {
-              //print(snapshot.data.get('phonenum'));
-              return PersonInformation();
-            } else {
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
+            } else if (snapshot.hasData && snapshot.data.data() != null) {
               user.phoneNo = snapshot.data.get('phonenum');
+              user.email = FirebaseAuth.instance.currentUser.email ?? '';
+              user.stunum = snapshot.data.get('stunum');
+              user.url = snapshot.data.get('url');
               print(user.phoneNo);
               return HomePage();
+            } else {
+              // 만약 유저의 data가 없으면 정보 입력 화면으로 간다.
+              return PersonInformation();
             }
           });
-    }
-
-    if (user == null) {
-      return LoginPage();
-      // }
-      // else if (FirebaseFirestore.instance
-      //         .collection('user')
-      //         .where('uid', isEqualTo: user.uid)
-      //         .snapshots() ==
-      //     null) {
-      //   return PersonInformation();
-    } else {
-      return PersonInformation();
     }
   }
 }

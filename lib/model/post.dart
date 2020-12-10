@@ -6,6 +6,7 @@ class Post {
   final String phoneNo;
   final String destination;
   final String time;
+  final String url;
   final int replies;
   final int people;
   final DocumentReference reference;
@@ -16,6 +17,7 @@ class Post {
     this.phoneNo,
     this.destination,
     this.time,
+    this.url,
     this.replies,
     this.people,
     this.reference,

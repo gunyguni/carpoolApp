@@ -10,7 +10,6 @@ class AddItem extends StatefulWidget {
 
 class _AddItemState extends State<AddItem> {
   TextEditingController _title = TextEditingController();
-  TextEditingController _phoneNo = TextEditingController();
   TextEditingController _people = TextEditingController();
   TextEditingController _destination = TextEditingController();
   TextEditingController _time = TextEditingController();
@@ -36,12 +35,13 @@ class _AddItemState extends State<AddItem> {
                 await post.add({
                   'uid': user.uid,
                   'title': _title.text,
-                  'phoneNo': _phoneNo.text,
+                  'phoneNo': user.phoneNo,
                   'people': int.parse(_people.text),
                   'destination': _destination.text,
                   'time': _time.text,
                   'likedUid': <String>[],
                   'replies': 0,
+                  'url': user.url,
                 });
               } catch (e) {
                 print(e.toString());
@@ -59,15 +59,6 @@ class _AddItemState extends State<AddItem> {
                 controller: _title,
                 decoration: InputDecoration(
                   labelText: '제목',
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: _phoneNo,
-                decoration: InputDecoration(
-                  labelText: '핸드폰 번호',
                 ),
               ),
             ),

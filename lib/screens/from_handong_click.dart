@@ -33,12 +33,13 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
         stream: widget.post.reference.snapshots(),
         builder: (context, snapshot) {
           //해당 카풀을 신청한 사람의 uid 저장
-          List likedUid = snapshot.data.get('likedUid');
+
           if (snapshot.connectionState == ConnectionState.waiting ||
               !snapshot.hasData ||
               snapshot.data.data() == null) {
             return Center(child: CircularProgressIndicator());
           }
+          List likedUid = snapshot.data.get('likedUid') ?? [];
           return Scaffold(
             appBar: AppBar(
               title: Text('From Handong'),
@@ -59,6 +60,33 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                   ),
                   SizedBox(
                     height: 10,
+                  ),
+                  Container(
+                    width: 200,
+                    height: 150,
+                    child: Image.network(
+                      widget.post.url,
+                      width: 150,
+                      height: 100,
+                      fit: BoxFit.contain,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          offset: Offset(4.0, 4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                        BoxShadow(
+                          color: Colors.grey[600],
+                          offset: Offset(-4.0, -4.0),
+                          blurRadius: 15.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ],
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.fromLTRB(80, 10, 40, 50),
@@ -100,7 +128,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                       if (likedUid.contains(_user.uid)) {
                         widget.post.reference
                             .collection('subscribe')
-                            .doc(snapshot.data.get('uid'))
+                            .doc(_user.uid)
                             .delete();
                         // 그 후 현재 카풀 신청 인원을 1 줄임
                         widget.post.reference
@@ -121,13 +149,16 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                               .update({'replies': FieldValue.increment(1)});
                           likedUid.add(_user.uid);
                           widget.post.reference.update({'likedUid': likedUid});
-                          //해당 글의 subcollection의 클릭한 사람 이름 저장하기
+                          //해당 글의 subcollection의 클릭한 user의 data 저장하기
                           widget.post.reference
                               .collection('subscribe')
-                              .doc(snapshot.data.get('uid'))
+                              .doc(_user.uid)
                               .set({
-                            'uid': '21600244',
-                            'phoneNo': '01012345678'
+                            'uid': _user.uid,
+                            'stunum': _user.stunum,
+                            'email': _user.email,
+                            'phoneNo': _user.phoneNo,
+                            'url': _user.url,
                           });
 
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
