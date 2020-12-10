@@ -58,7 +58,7 @@ class _PersonInformationState extends State<PersonInformation> {
               await ref.putFile(_image);
               String url = (await ref.getDownloadURL()).toString();
               await userinfo
-                  .doc()
+                  .doc(user.uid)
                   .set({
                     'uid': user.uid,
                     'phonenum': _phoneController.text,
@@ -69,6 +69,7 @@ class _PersonInformationState extends State<PersonInformation> {
                   .catchError((error) => print('Failed add Item : $error'));
 
               uploaded = false;
+              // print(FirebaseFirestore.instance.collection('user').doc(user.uid).snapshots());
             },
           ),
         ],
