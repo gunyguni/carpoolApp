@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
+import 'package:handongcarpool/screens/ShowProfilePicture.dart';
 import 'package:handongcarpool/widgets/reply_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -61,31 +62,43 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: 200,
-                    height: 150,
-                    child: Image.network(
-                      widget.post.url,
-                      width: 150,
-                      height: 100,
-                      fit: BoxFit.contain,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          offset: Offset(4.0, 4.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePicture(
+                            pictureURL: widget.post.url,
+                          ),
                         ),
-                        BoxShadow(
-                          color: Colors.grey[600],
-                          offset: Offset(-4.0, -4.0),
-                          blurRadius: 15.0,
-                          spreadRadius: 1.0,
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      width: 200,
+                      height: 150,
+                      child: Image.network(
+                        widget.post.url,
+                        width: 150,
+                        height: 100,
+                        fit: BoxFit.contain,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            offset: Offset(4.0, 4.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0,
+                          ),
+                          BoxShadow(
+                            color: Colors.grey[600],
+                            offset: Offset(-4.0, -4.0),
+                            blurRadius: 15.0,
+                            spreadRadius: 1.0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(

@@ -43,11 +43,12 @@ class _PersonInformationState extends State<PersonInformation> {
     firebase_storage.Reference ref =
         firebase_storage.FirebaseStorage.instance.ref().child('user');
     final user = Provider.of<TheUser>(context);
+    String url = '';
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('Put phone no, Profile'),
+        title: Text('개인 정보 입력'),
         centerTitle: true,
         actions: [
           FlatButton(
@@ -56,8 +57,14 @@ class _PersonInformationState extends State<PersonInformation> {
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () async {
-              await ref.putFile(_image);
-              String url = (await ref.getDownloadURL()).toString();
+              if (_image != null) {
+                await ref.putFile(_image);
+                url = (await ref.getDownloadURL()).toString();
+              } else {
+                url =
+                    'https://www.handong.edu/site/handong/res/img/splash-1199.png';
+              }
+
               await userinfo
                   .doc(user.uid)
                   .set({

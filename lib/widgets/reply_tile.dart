@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
+import 'package:handongcarpool/screens/ShowProfilePicture.dart';
 import 'package:handongcarpool/screens/from_handong.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -62,16 +63,26 @@ class _ReplyTileState extends State<ReplyTile> {
   Widget _replyCard(TheUser user) {
     return ListTile(
       //아이콘 circle avatar로 바꿈
-      leading: user.url == null
-          ? Icon(Icons.person)
-          : CircleAvatar(
-              radius: 30,
-              backgroundColor: Colors.orange,
-              child: CircleAvatar(
-                radius: 25,
-                backgroundImage: NetworkImage(user.url),
+      leading: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfilePicture(
+                pictureURL: user.url,
               ),
             ),
+          );
+        },
+        child: CircleAvatar(
+          radius: 30,
+          backgroundColor: Colors.orange,
+          child: CircleAvatar(
+            radius: 25,
+            backgroundImage: NetworkImage(user.url),
+          ),
+        ),
+      ),
       title: Text(user.stunum),
       subtitle: Text('연락처: ' + user.phoneNo + '\n이메일: ' + user.email),
     );
