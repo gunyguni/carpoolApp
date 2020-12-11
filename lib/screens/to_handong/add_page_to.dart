@@ -5,16 +5,15 @@ import 'package:provider/provider.dart';
 
 class AddItemTo extends StatefulWidget {
   @override
-  _AddItemState createState() => _AddItemState();
+  _AddItemToState createState() => _AddItemToState();
 }
 
-class _AddItemState extends State<AddItemTo> {
+class _AddItemToState extends State<AddItemTo> {
   TextEditingController _title = TextEditingController();
-  TextEditingController _phoneNo = TextEditingController();
   TextEditingController _people = TextEditingController();
   TextEditingController _destination = TextEditingController();
   TextEditingController _time = TextEditingController();
-  CollectionReference post = FirebaseFirestore.instance.collection('fromHGU');
+  CollectionReference post = FirebaseFirestore.instance.collection('toHGU');
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +35,13 @@ class _AddItemState extends State<AddItemTo> {
                 await post.add({
                   'uid': user.uid,
                   'title': _title.text,
-                  'phoneNo': _phoneNo.text,
+                  'phoneNo': user.phoneNo,
                   'people': int.parse(_people.text),
                   'destination': _destination.text,
                   'time': _time.text,
                   'likedUid': <String>[],
                   'replies': 0,
+                  'url': user.url,
                 });
               } catch (e) {
                 print(e.toString());

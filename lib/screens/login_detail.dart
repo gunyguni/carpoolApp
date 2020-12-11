@@ -78,6 +78,7 @@ class _PersonInformationState extends State<PersonInformation> {
   //   String url = (await ref.getDownloadURL()).toString();
   //   await userinfo.doc().set({'uid': user.uid, 'phonenum': _phoneController.text, 'email': user.email, 'url': url}).then((value) => print('Item added')).catchError((error) => print('Failed add Item : $error'));
   // }
+
   Widget build(BuildContext context) {
     firebase_storage.Reference ref =
         firebase_storage.FirebaseStorage.instance.ref().child('user');

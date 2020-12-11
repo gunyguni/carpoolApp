@@ -166,6 +166,8 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                         // 그 후 현재 카풀 신청 인원을 1 줄임
                         widget.post.reference
                             .update({'replies': FieldValue.increment(-1)});
+                        // 현재 user가 취소한 카풀의 post object를 user로부터 제거
+                        _user.fromPosts.remove(widget.post);
                         // 마지막으로 현재 카풀을 신청한 uid list에서 현재 user의 uid를 제거함
                         likedUid.remove(_user.uid);
                         widget.post.reference.update({'likedUid': likedUid});
@@ -194,9 +196,13 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                             'url': _user.url,
                           });
 
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("신청 완료"),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("신청 완료"),
+                            ),
+                          );
+                          //신청한 카풀 post object가 user에게 저장
+                          _user.fromPosts.add(widget.post);
                         } else {
                           //카풀을 이미 신청한 경우. 이는 우리가 디자인적으로 극복해서 굳이 처리할 필요가
                           // 없는 exception case이기 때문에 지워도 되지만 혹시 모르니 일단 놔둠

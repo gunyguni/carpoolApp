@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
-import 'package:handongcarpool/screens/add_page_from.dart';
-import 'package:handongcarpool/screens/from_handong_click.dart';
+import 'package:handongcarpool/screens/from_handong/add_page_from.dart';
+import 'package:handongcarpool/screens/from_handong/from_handong_click.dart';
 import 'package:handongcarpool/screens/profile.dart';
+import 'package:handongcarpool/screens/to_handong/add_page_to.dart';
+import 'package:handongcarpool/screens/to_handong/to_handong_click.dart';
 import 'package:handongcarpool/service/auth.dart';
 import 'package:handongcarpool/widgets/post_tile.dart';
 import 'package:provider/provider.dart';
 
-class FromHandong extends StatelessWidget {
-  AuthService _auth = AuthService();
+class ToHandong extends StatelessWidget {
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +34,14 @@ class FromHandong extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AddItem()),
+                MaterialPageRoute(builder: (context) => AddItemTo()),
               );
             },
           )
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('fromHGU').snapshots(),
+          stream: FirebaseFirestore.instance.collection('toHGU').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -102,9 +104,10 @@ class FromHandong extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => DetailedFromPage(
-                        post: post,
-                      )), //parameter로 post 넘기기
+                builder: (context) => DetailedToPage(
+                  post: post,
+                ),
+              ), //parameter로 post 넘기기
             );
           },
           title: Text(post.title),
@@ -120,31 +123,3 @@ class FromHandong extends StatelessWidget {
     );
   }
 }
-
-// class Post {
-//   final String uid;
-//   final String title;
-//   final String phoneNo;
-//   final String destination;
-//   final int time;
-//   final int people;
-//   final DocumentReference reference;
-
-//   Post.fromMap(Map<String, dynamic> map, {this.reference})
-//       : assert(map['uid'] != null),
-//         assert(map['title'] != null),
-//         assert(map['phoneNo'] != null),
-//         // assert(map['description'] != null),
-//         // assert(map['created'] != null),
-//         // assert(map['updated'] != null),
-
-//         uid = map['uid'],
-//         title = map['title'],
-//         phoneNo = map['phoneNo'],
-//         destination = map['destination'],
-//         time = map['time'],
-//         people = map['people'];
-
-//   Post.fromSnapshot(DocumentSnapshot snapshot)
-//       : this.fromMap(snapshot.data(), reference: snapshot.reference);
-// }

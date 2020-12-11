@@ -30,7 +30,8 @@ class Wrapper extends StatelessWidget {
               user.email = FirebaseAuth.instance.currentUser.email ?? '';
               user.stunum = snapshot.data.get('stunum');
               user.url = snapshot.data.get('url');
-              print(user.phoneNo);
+              user.fromPosts = [];
+              user.toPosts = [];
               return HomePage();
             } else {
               // 만약 유저의 data가 없으면 정보 입력 화면으로 간다.

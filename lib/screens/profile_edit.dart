@@ -16,14 +16,15 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-  TextEditingController _phoneeditController = TextEditingController();
-  TextEditingController _stunumeditController = TextEditingController();
+
   User users = FirebaseAuth.instance.currentUser;
   AuthService _auth = AuthService();
   bool uploaded = false;
   File _eimage;
   final picker = ImagePicker();
   @override
+
+
   Future editgetImageFromCamera() async{
     final editpickedFileCam = await picker.getImage(source: ImageSource.camera);
     setState(() {
@@ -75,9 +76,11 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
   CollectionReference userinfo = FirebaseFirestore.instance.collection('user');
   Widget build(BuildContext context) {
+    final user = Provider.of<TheUser>(context);
+    TextEditingController _phoneeditController = TextEditingController(text: user.phoneNo);
+    TextEditingController _stunumeditController = TextEditingController(text: user.stunum);
     firebase_storage.Reference ref =
     firebase_storage.FirebaseStorage.instance.ref().child('user');
-    final user = Provider.of<TheUser>(context);
     String url = '';
     return Scaffold(
       appBar: AppBar(
@@ -99,13 +102,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                   .doc(user.uid)
                   .update({
                 'uid': user.uid,
-                'phonenum': _phoneeditController.text == null ? user.phoneNo : _phoneeditController.text,
+                'phonenum': _phoneeditController.text,
                 'email': FirebaseAuth.instance.currentUser.email,
                 'url': url,
-                'stunum': _stunumeditController.text == null ? user.stunum : _stunumeditController.text
+                'stunum': _stunumeditController.text
               })
                   .then((value) => print('Item added'))
                   .catchError((error) => print('Failed add Item : $error'));
+              print(user.phoneNo);
               uploaded = false;
               Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage())).then((value) => setState(() {}));
             },
@@ -153,7 +157,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       width: 120,
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                          labelText: user.stunum,
                                           focusColor: Colors.white,
                                         ),
                                         controller: _stunumeditController,
@@ -172,7 +175,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       width: 110,
                                       child: TextFormField(
                                         decoration: InputDecoration(
-                                          labelText: user.phoneNo,
                                           focusColor: Colors.white,
                                         ),
                                         controller: _phoneeditController,

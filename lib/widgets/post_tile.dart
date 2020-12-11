@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
-import 'package:handongcarpool/screens/from_handong.dart';
+import 'package:handongcarpool/screens/from_handong/from_handong.dart';
 
 class PostTile extends StatelessWidget {
   final Post post;

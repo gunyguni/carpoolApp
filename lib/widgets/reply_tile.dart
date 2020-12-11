@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/post.dart';
 import 'package:handongcarpool/model/user_info.dart';
 import 'package:handongcarpool/screens/ShowProfilePicture.dart';
-import 'package:handongcarpool/screens/from_handong.dart';
+import 'package:handongcarpool/screens/from_handong/from_handong.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 

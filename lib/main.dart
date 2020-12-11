@@ -20,6 +20,9 @@ class MyApp extends StatelessWidget {
         title: 'final',
         home: Wrapper(),
         theme: defaultTheme(),
+        routes: {
+          '/initialPage': (context) => Wrapper(),
+        },
       ),
     );
   }
