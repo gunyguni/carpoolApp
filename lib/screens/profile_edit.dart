@@ -83,7 +83,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     TextEditingController _nameeditController =
         TextEditingController(text: user.username);
     firebase_storage.Reference ref =
-        firebase_storage.FirebaseStorage.instance.ref().child('user');
+        firebase_storage.FirebaseStorage.instance.ref().child(user.uid);
     String url = '';
     return Scaffold(
       appBar: AppBar(
