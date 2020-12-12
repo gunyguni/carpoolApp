@@ -78,6 +78,7 @@ class ToHandong extends StatelessWidget {
       return snapshot.map((doc) {
         return Post(
           uid: doc.get('uid') ?? '',
+          username: doc.get('username') ?? '',
           title: doc.get('title') ?? '',
           phoneNo: doc.get('phoneNo') ?? '',
           url: doc.get('url') ?? null,
@@ -110,7 +111,7 @@ class ToHandong extends StatelessWidget {
               ), //parameter로 post 넘기기
             );
           },
-          title: Text(post.title),
+          title: Text(post.title + '  (${post.time})'),
           subtitle: Text(post.phoneNo),
           trailing: Column(
             children: <Widget>[

@@ -91,6 +91,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: [
                               Row(
                                 children: [
+                                  Text('이름: '),
+                                  Text(
+                                    user.username,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
                                   Text('학번: '),
                                   Text(
                                     user.stunum,

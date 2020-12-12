@@ -5,6 +5,7 @@ class TheUser {
   String email;
   String phoneNo;
   String stunum;
+  String username;
   String url;
   List<Post> fromPosts;
   List<Post> toPosts;
@@ -14,6 +15,7 @@ class TheUser {
       this.email,
       this.phoneNo,
       this.stunum,
+      this.username,
       this.url,
       this.fromPosts});
 }

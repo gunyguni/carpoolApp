@@ -116,6 +116,10 @@ class _DetailedToPageState extends State<DetailedToPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
+                          "이름: " + widget.post.username,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
                           "연락처: " + widget.post.phoneNo,
                           style: TextStyle(fontSize: 18),
                         ),
@@ -179,6 +183,7 @@ class _DetailedToPageState extends State<DetailedToPage> {
                               .doc(_user.uid)
                               .set({
                             'uid': _user.uid,
+                            'username': _user.username,
                             'stunum': _user.stunum,
                             'email': _user.email,
                             'phoneNo': _user.phoneNo,

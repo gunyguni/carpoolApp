@@ -17,6 +17,8 @@ class PersonInformation extends StatefulWidget {
 class _PersonInformationState extends State<PersonInformation> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _stunumController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+
   bool uploaded = false;
   File _image;
   final picker = ImagePicker();
@@ -111,6 +113,7 @@ class _PersonInformationState extends State<PersonInformation> {
                   .doc(user.uid)
                   .set({
                     'uid': user.uid,
+                    'username': _nameController.text,
                     'phonenum': _phoneController.text,
                     'email': FirebaseAuth.instance.currentUser.email,
                     'url': url,
@@ -163,6 +166,13 @@ class _PersonInformationState extends State<PersonInformation> {
               width: 270,
               child: Column(
                 children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: '이름',
+                      focusColor: Colors.white,
+                    ),
+                    controller: _nameController,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                       hintText: '학번',

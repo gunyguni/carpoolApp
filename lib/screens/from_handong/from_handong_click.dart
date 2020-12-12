@@ -127,6 +127,10 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
+                          "이름: " + widget.post.username,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
                           "연락처: " + widget.post.phoneNo,
                           style: TextStyle(fontSize: 18),
                         ),
@@ -190,6 +194,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                               .doc(_user.uid)
                               .set({
                             'uid': _user.uid,
+                            'username': _user.username,
                             'stunum': _user.stunum,
                             'email': _user.email,
                             'phoneNo': _user.phoneNo,
@@ -205,7 +210,7 @@ class _DetailedFromPageState extends State<DetailedFromPage> {
                           _user.fromPosts.add(widget.post);
                         } else {
                           //카풀을 이미 신청한 경우. 이는 우리가 디자인적으로 극복해서 굳이 처리할 필요가
-                          // 없는 exception case이기 때문에 지워도 되지만 혹시 모르니 일단 놔둠
+                          //없는 exception case이기 때문에 지워도 되지만 보험용으로 놔둠
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text("이미 해당 카풀을 신청 했습니다 ㅜㅜ"),
                           ));

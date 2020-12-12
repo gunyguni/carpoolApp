@@ -80,6 +80,8 @@ class _ProfileEditState extends State<ProfileEdit> {
         TextEditingController(text: user.phoneNo);
     TextEditingController _stunumeditController =
         TextEditingController(text: user.stunum);
+    TextEditingController _nameeditController =
+        TextEditingController(text: user.username);
     firebase_storage.Reference ref =
         firebase_storage.FirebaseStorage.instance.ref().child('user');
     String url = '';
@@ -121,118 +123,142 @@ class _ProfileEditState extends State<ProfileEdit> {
       ),
       body: SingleChildScrollView(
         child: Container(
-            color: Colors.black,
             child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                  child: Container(
-                    color: Colors.black,
-                    child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+              child: Container(
+                child: Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        _showPicker(context);
+                      },
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: 170,
+                            backgroundImage: _eimage == null
+                                ? NetworkImage(user.url)
+                                : FileImage(_eimage),
+                          ),
+                          Positioned(
+                            bottom: 27,
+                            right: 27,
+                            child: Container(
+                              padding: EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                      width: 2, color: Colors.black)),
+                              child: Icon(
+                                Icons.add_a_photo,
+                                size: 35,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Text('이름: '),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              width: 120,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusColor: Colors.white,
+                                ),
+                                controller: _nameeditController,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Text('학번: '),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              width: 120,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  focusColor: Colors.white,
+                                ),
+                                controller: _stunumeditController,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
                               width: 25,
                             ),
-                            InkWell(
-                              onTap: () {
-                                _showPicker(context);
-                              },
-                              child: Stack(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: _eimage == null
-                                        ? NetworkImage(user.url)
-                                        : FileImage(_eimage),
-                                  ),
-                                  Positioned(
-                                    bottom: 0,
-                                    right: 0,
-                                    child: Container(
-                                      padding: EdgeInsets.all(3),
-                                      decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          border: Border.all(
-                                              width: 2, color: Colors.black)),
-                                      child: Icon(
-                                        Icons.add_a_photo,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text('학번: '),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: 120,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          focusColor: Colors.white,
-                                        ),
-                                        controller: _stunumeditController,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                Text('휴대폰: '),
                                 SizedBox(
-                                  height: 20,
+                                  width: 10,
                                 ),
-                                Row(
-                                  children: [
-                                    Text('휴대폰: '),
-                                    SizedBox(
-                                      width: 10,
+                                Container(
+                                  width: 110,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      focusColor: Colors.white,
                                     ),
-                                    Container(
-                                      width: 110,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          focusColor: Colors.white,
-                                        ),
-                                        controller: _phoneeditController,
-                                      ),
-                                    ),
-                                  ],
+                                    controller: _phoneeditController,
+                                  ),
                                 ),
                               ],
-                            )
+                            ),
                           ],
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Divider(
-                          color: Colors.grey,
-                          thickness: 2,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                        )
                       ],
                     ),
-                  ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 2,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                  ],
                 ),
-              ],
-            )),
+              ),
+            ),
+          ],
+        )),
       ),
     );
   }
