@@ -21,15 +21,16 @@ class _PersonInformationState extends State<PersonInformation> {
   File _image;
   final picker = ImagePicker();
   @override
-  Future getImageFromCamera() async{
+  Future getImageFromCamera() async {
     final pickedFileCam = await picker.getImage(source: ImageSource.camera);
     setState(() {
-      if(pickedFileCam != null){
+      if (pickedFileCam != null) {
         _image = File(pickedFileCam.path);
         uploaded = true;
       }
     });
   }
+
   Future getImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
@@ -39,37 +40,38 @@ class _PersonInformationState extends State<PersonInformation> {
       }
     });
   }
-  void _showPicker(context){
+
+  void _showPicker(context) {
     showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc){
-        return SafeArea(
-          child: Container(
-            child: Wrap(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.photo_camera),
-                  title: Text('카메라'),
-                  onTap: () {
-                    getImageFromCamera();
-                    Navigator.of(context).pop();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('갤러리'),
-                  onTap: () {
-                    getImageFromGallery();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('카메라'),
+                    onTap: () {
+                      getImageFromCamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('갤러리'),
+                    onTap: () {
+                      getImageFromGallery();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
+
   CollectionReference userinfo = FirebaseFirestore.instance.collection('user');
   // Future<void> addInformation() async {
   //   firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child('user');

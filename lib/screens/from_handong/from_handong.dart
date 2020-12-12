@@ -17,16 +17,9 @@ class FromHandong extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        title: Text('카풀 게시판'),
+        title: Text('카풀 게시판 (시내행)'),
+        centerTitle: true,
         actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Log'),
-            onPressed: () async {
-              await _auth.signOut();
-              Navigator.pop(context);
-            },
-          ),
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
@@ -39,7 +32,10 @@ class FromHandong extends StatelessWidget {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('fromHGU').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('fromHGU')
+              .orderBy('timeStamp', descending: true)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -95,8 +91,12 @@ class FromHandong extends StatelessWidget {
 
   Widget _postTile(BuildContext context, Post post) {
     return Padding(
-      padding: EdgeInsets.only(top: 2),
+      padding: EdgeInsets.only(top: 2, left: 5, right: 5),
       child: Card(
+        shape: RoundedRectangleBorder(
+          side: new BorderSide(color: Colors.amber[700], width: 2.0),
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         child: ListTile(
           onTap: () {
             Navigator.push(
@@ -107,7 +107,7 @@ class FromHandong extends StatelessWidget {
                       )), //parameter로 post 넘기기
             );
           },
-          title: Text(post.title),
+          title: Text(post.title + '  (${post.time})'),
           subtitle: Text(post.phoneNo),
           trailing: Column(
             children: <Widget>[

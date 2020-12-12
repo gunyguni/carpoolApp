@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:handongcarpool/model/user_info.dart';
@@ -12,8 +15,20 @@ class _AddItemState extends State<AddItem> {
   TextEditingController _title = TextEditingController();
   TextEditingController _people = TextEditingController();
   TextEditingController _destination = TextEditingController();
-  TextEditingController _time = TextEditingController();
   CollectionReference post = FirebaseFirestore.instance.collection('fromHGU');
+  //현재 시간으로 초기화한 time
+  String _selectedTime =
+      Duration(hours: TimeOfDay.now().hour, minutes: TimeOfDay.now().hour)
+              .toString()
+              .split(':')
+              .first
+              .padLeft(2, "0") +
+          ':' +
+          Duration(hours: TimeOfDay.now().hour, minutes: TimeOfDay.now().hour)
+              .toString()
+              .split(':')
+              .elementAt(1)
+              .padLeft(2, "0");
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +53,11 @@ class _AddItemState extends State<AddItem> {
                   'phoneNo': user.phoneNo,
                   'people': int.parse(_people.text),
                   'destination': _destination.text,
-                  'time': _time.text,
+                  'time': _selectedTime,
                   'likedUid': <String>[],
                   'replies': 0,
                   'url': user.url,
+                  'timeStamp': Timestamp.now(),
                 });
               } catch (e) {
                 print(e.toString());
@@ -80,15 +96,46 @@ class _AddItemState extends State<AddItem> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: TextField(
-                controller: _time,
-                decoration: InputDecoration(
-                  labelText: '시간',
-                ),
-              ),
+            SizedBox(
+              height: 20,
             ),
+            RaisedButton.icon(
+              color: Colors.orange[500],
+              icon: Icon(Icons.watch_later),
+              label: Text('시간 고르기'),
+              onPressed: () {
+                Future<TimeOfDay> selectedTime = showTimePicker(
+                  initialTime: TimeOfDay.now(),
+                  context: context,
+                );
+
+                selectedTime.then((timeOfDay) {
+                  setState(() {
+                    _selectedTime = Duration(
+                                hours: timeOfDay.hour,
+                                minutes: timeOfDay.minute)
+                            .toString()
+                            .split(':')
+                            .first
+                            .padLeft(2, "0") +
+                        ':' +
+                        Duration(
+                                hours: timeOfDay.hour,
+                                minutes: timeOfDay.minute)
+                            .toString()
+                            .split(':')
+                            .elementAt(1)
+                            .padLeft(2, "0");
+                  });
+                });
+              },
+            ),
+            Text(
+              '시간: ' + _selectedTime,
+              style: TextStyle(
+                fontSize: 25,
+              ),
+            )
           ],
         ),
       ),

@@ -31,13 +31,15 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('프로필'),
           centerTitle: true,
           backgroundColor: Colors.grey,
-          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => HomePage()));
-          },
-            ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => HomePage()));
+            },
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.edit),
@@ -68,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 child: Container(
                   padding: EdgeInsets.only(top: 50),
-                  color: Colors.black,
+                  color: Colors.grey[800],
                   child: Column(
                     children: [
                       Row(
@@ -118,8 +120,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 25,
                       ),
                       Divider(
+                        indent: 10,
+                        endIndent: 10,
                         color: Colors.grey,
-                        thickness: 2,
+                        thickness: 3,
                       ),
                       SizedBox(
                         height: 15,
@@ -167,6 +171,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             return Padding(
                               padding: EdgeInsets.only(top: 2),
                               child: Card(
+                                shape: RoundedRectangleBorder(
+                                  side: new BorderSide(
+                                      color: Colors.amber[700], width: 2.0),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
                                 child: ListTile(
                                   onTap: () {
                                     Navigator.push(
@@ -182,10 +191,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   subtitle: Text(fromposts[index].phoneNo),
                                   trailing: Column(
                                     children: <Widget>[
-                                      Icon(Icons.person),
-                                      Text(fromposts[index].replies.toString() +
-                                          '/' +
-                                          fromposts[index].people.toString())
+                                      Icon(Icons.access_alarm),
+                                      Text(
+                                        fromposts[index].time,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -228,13 +238,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             return Padding(
                               padding: EdgeInsets.only(top: 2),
                               child: Card(
+                                shape: RoundedRectangleBorder(
+                                  side: new BorderSide(
+                                      color: Colors.blue, width: 2.0),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
                                 child: ListTile(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailedToPage(
+                                          builder: (context) => DetailedToPage(
                                                 post: toposts[index],
                                               )), //parameter로 post 넘기기
                                     );
@@ -243,10 +257,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   subtitle: Text(toposts[index].phoneNo),
                                   trailing: Column(
                                     children: <Widget>[
-                                      Icon(Icons.person),
-                                      Text(toposts[index].replies.toString() +
-                                          '/' +
-                                          toposts[index].people.toString())
+                                      Icon(Icons.access_alarm),
+                                      Text(
+                                        toposts[index].time,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -265,4 +280,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       );
     }
-}}
+  }
+}

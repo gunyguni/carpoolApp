@@ -16,24 +16,22 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-
   User users = FirebaseAuth.instance.currentUser;
   AuthService _auth = AuthService();
   bool uploaded = false;
   File _eimage;
   final picker = ImagePicker();
   @override
-
-
-  Future editgetImageFromCamera() async{
+  Future editgetImageFromCamera() async {
     final editpickedFileCam = await picker.getImage(source: ImageSource.camera);
     setState(() {
-      if(editpickedFileCam != null){
+      if (editpickedFileCam != null) {
         _eimage = File(editpickedFileCam.path);
         uploaded = true;
       }
     });
   }
+
   Future editgetImageFromGallery() async {
     final editpickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
@@ -43,10 +41,11 @@ class _ProfileEditState extends State<ProfileEdit> {
       }
     });
   }
-  void _showPicker(context){
+
+  void _showPicker(context) {
     showModalBottomSheet(
         context: context,
-        builder: (BuildContext bc){
+        builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
               child: Wrap(
@@ -71,16 +70,18 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
             ),
           );
-        }
-    );
+        });
   }
+
   CollectionReference userinfo = FirebaseFirestore.instance.collection('user');
   Widget build(BuildContext context) {
     final user = Provider.of<TheUser>(context);
-    TextEditingController _phoneeditController = TextEditingController(text: user.phoneNo);
-    TextEditingController _stunumeditController = TextEditingController(text: user.stunum);
+    TextEditingController _phoneeditController =
+    TextEditingController(text: user.phoneNo);
+    TextEditingController _stunumeditController =
+    TextEditingController(text: user.stunum);
     firebase_storage.Reference ref =
-    firebase_storage.FirebaseStorage.instance.ref().child(user.uid);
+    firebase_storage.FirebaseStorage.instance.ref().child('user');
     String url = '';
     return Scaffold(
       appBar: AppBar(
@@ -111,66 +112,90 @@ class _ProfileEditState extends State<ProfileEdit> {
                   .catchError((error) => print('Failed add Item : $error'));
               print(user.phoneNo);
               uploaded = false;
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage())).then((value) => setState(() {}));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()))
+                  .then((value) => setState(() {}));
             },
           ),
         ],
       ),
       body: SingleChildScrollView(
         child: Container(
-            color: Colors.black,
             child: Column(
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
                   child: Container(
-                    color: Colors.black,
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 25,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                _showPicker(context);
-                              },
-                              child: CircleAvatar(
-                                radius: 50,
+                        InkWell(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: Stack(
+                            children: [
+                              CircleAvatar(
+                                radius: 170,
                                 backgroundImage: _eimage == null
-                                    ? NetworkImage(user.url) : FileImage(_eimage),
+                                    ? NetworkImage(user.url)
+                                    : FileImage(_eimage),
                               ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  padding: EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(50),
+                                      border: Border.all(
+                                          width: 2, color: Colors.black)),
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text('학번: '),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 120,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      focusColor: Colors.white,
+                                    ),
+                                    controller: _stunumeditController,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(
-                              width: 20,
+                              height: 20,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    Text('학번: '),
-                                    SizedBox(width: 10,),
-                                    Container(
-                                      width: 120,
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                          focusColor: Colors.white,
-                                        ),
-                                        controller: _stunumeditController,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 SizedBox(
-                                  height: 20,
+                                  width: 25,
                                 ),
                                 Row(
                                   children: [
                                     Text('휴대폰: '),
-                                    SizedBox(width: 10,),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
                                     Container(
                                       width: 110,
                                       child: TextFormField(
