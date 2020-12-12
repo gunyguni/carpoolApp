@@ -47,6 +47,7 @@ class _AddItemToState extends State<AddItemTo> {
                 Navigator.pop(context);
                 await post.add({
                   'uid': user.uid,
+                  'username': user.username,
                   'title': _title.text,
                   'phoneNo': user.phoneNo,
                   'people': int.parse(_people.text),

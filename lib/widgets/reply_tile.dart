@@ -83,7 +83,7 @@ class _ReplyTileState extends State<ReplyTile> {
           ),
         ),
       ),
-      title: Text(user.stunum),
+      title: Text(user.username + '(${user.stunum})'),
       subtitle: Text('연락처: ' + user.phoneNo + '\n이메일: ' + user.email),
     );
   }

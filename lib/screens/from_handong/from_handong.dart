@@ -76,6 +76,7 @@ class FromHandong extends StatelessWidget {
       return snapshot.map((doc) {
         return Post(
           uid: doc.get('uid') ?? '',
+          username: doc.get('username') ?? '',
           title: doc.get('title') ?? '',
           phoneNo: doc.get('phoneNo') ?? '',
           url: doc.get('url') ?? null,
