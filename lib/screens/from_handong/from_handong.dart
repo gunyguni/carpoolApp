@@ -94,7 +94,7 @@ class FromHandong extends StatelessWidget {
       padding: EdgeInsets.only(top: 2, left: 5, right: 5),
       child: Card(
         shape: RoundedRectangleBorder(
-          side: new BorderSide(color: Colors.amber[700], width: 2.0),
+          side: new BorderSide(color: Colors.white, width: 2.0),
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: ListTile(
