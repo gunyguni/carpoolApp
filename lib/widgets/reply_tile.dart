@@ -51,6 +51,7 @@ class _ReplyTileState extends State<ReplyTile> {
       return snapshot.map((data) {
         return TheUser(
           uid: data.get('uid'),
+          username: data.get('username'),
           stunum: data.get('stunum'),
           phoneNo: data.get('phoneNo'),
           url: data.get('url'),

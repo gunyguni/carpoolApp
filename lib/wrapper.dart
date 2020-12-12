@@ -30,6 +30,7 @@ class Wrapper extends StatelessWidget {
               user.email = FirebaseAuth.instance.currentUser.email ?? '';
               user.stunum = snapshot.data.get('stunum');
               user.url = snapshot.data.get('url');
+              user.username = snapshot.data.get('username');
               user.fromPosts = [];
               user.toPosts = [];
               return HomePage();
