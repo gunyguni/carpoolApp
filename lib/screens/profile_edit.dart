@@ -197,7 +197,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                             ),
                             Text('학번: '),
                             SizedBox(
-                              width: 20,
+                              height: 20,
                             ),
                             Container(
                               width: 120,

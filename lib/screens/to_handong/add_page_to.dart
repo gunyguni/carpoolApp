@@ -99,9 +99,9 @@ class _AddItemToState extends State<AddItemTo> {
               height: 20,
             ),
             RaisedButton.icon(
-              color: Colors.orange[500],
+              color: Colors.grey,
               icon: Icon(Icons.watch_later),
-              label: Text('시간 고르기'),
+              label: Text('시간 고르기', style: TextStyle(fontWeight: FontWeight.bold),),
               onPressed: () {
                 Future<TimeOfDay> selectedTime = showTimePicker(
                   initialTime: TimeOfDay.now(),

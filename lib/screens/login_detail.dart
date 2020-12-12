@@ -84,9 +84,9 @@ class _PersonInformationState extends State<PersonInformation> {
   // }
 
   Widget build(BuildContext context) {
-    firebase_storage.Reference ref =
-        firebase_storage.FirebaseStorage.instance.ref().child('user');
     final user = Provider.of<TheUser>(context);
+    firebase_storage.Reference ref =
+        firebase_storage.FirebaseStorage.instance.ref().child(user.uid);
     String url = '';
 
     return Scaffold(
